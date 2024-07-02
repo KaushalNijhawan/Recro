@@ -5,8 +5,11 @@ import { AddReviewRequest } from "./dto/addreview.dto";
 import { AddReviewResponse } from "./dto/addReviewResponse.dto";
 import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
 import { FetchReview } from "./dto/fetchReview.dto";
-
-@Injectable()
+/**
+ * ReviewService class responsible for handling review-related operations.
+ * Includes methods to fetch reviews by book ID, add a new review, update an existing review,
+ * delete a review, and fetch reviews by user ID.
+ */@Injectable()
 export class ReviewService{
 
     constructor(private readonly reviewRepo : ReviewRepository){}

@@ -6,6 +6,13 @@ import * as bycrpt from "bcrypt";
 import { JwtHelper } from "./jwt.helper";
 import { MessageConstants } from "src/constants/messageConstants";
 
+/**
+ * Class representing a UsersRepository with methods to add a user and verify a user.
+ * 
+ * Methods:
+ * - addUser: Adds a new user to the database using the provided RegisterUserDto.
+ * - verifyUser: Verifies the login credentials of a user using the provided LoginDto.
+ */
 @Injectable()
 export class UsersRepository{
     constructor(private readonly prismaService : PrismaService,

@@ -9,7 +9,11 @@ import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
 import { FetchReview } from "./dto/fetchReview.dto";
 import { MessageConstants } from "src/constants/messageConstants";
 
-
+/**
+ * Resolver class for handling review-related queries and mutations.
+ * Includes methods for fetching reviews, adding reviews, updating reviews, deleting reviews, and fetching user-specific reviews.
+ * Uses guards for authentication and handles exceptions with appropriate error messages.
+ */
 @Resolver(of => ReviewSchema)
 export class ReviewResolver{
 

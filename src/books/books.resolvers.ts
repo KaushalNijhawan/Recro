@@ -8,7 +8,11 @@ import { FetchBooks } from "./dto/fetchBooks.dto";
 import { HttpException, HttpStatus, UseGuards } from "@nestjs/common";
 import { AuthGaurdJwt } from "src/auth.guard";
 import { MessageConstants } from "src/constants/messageConstants";
-
+/**
+ * Resolver class for handling GraphQL queries and mutations related to books.
+ * Includes methods for fetching all books, fetching a book by ID, and adding a new book.
+ * Utilizes BookService to interact with the database.
+ */
 @Resolver(of => BooksSchema)
 export class BookResolver{
 

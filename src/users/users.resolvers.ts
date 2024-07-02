@@ -5,7 +5,10 @@ import { UserService } from "./users.service";
 import { LoginResponse } from "./dto/login.reponse.dto";
 import { RegisterUserDto } from "./dto/register.dto";
 import { RegisterUserReponse } from "./dto/registerUserResponse.dto";
-
+/**
+ * Resolver class for handling user-related operations such as login and registration.
+ * Contains methods for loginUser and registerUser mutations.
+ */
 @Resolver(of => UserSchema)
 export class UserResolver{
 

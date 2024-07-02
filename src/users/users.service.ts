@@ -3,6 +3,12 @@ import { UsersRepository } from "./users.repository";
 import { RegisterUserDto } from "./dto/register.dto";
 import * as bcrypt from "bcrypt";
 import { LoginDto } from "./dto/login.dto";
+
+/**
+ * Class representing a UserService.
+ * 
+ * This class provides methods for adding a user and logging in a user.
+ */
 @Injectable()
 export class UserService{
 

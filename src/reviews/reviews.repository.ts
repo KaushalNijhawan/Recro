@@ -7,6 +7,10 @@ import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
 import { FetchReview } from "./dto/fetchReview.dto";
 import { MessageConstants } from "src/constants/messageConstants";
 
+/**
+ * ReviewRepository class responsible for handling CRUD operations related to reviews.
+ * Includes methods for fetching reviews by book ID, deleting a review, adding a new review, updating an existing review, and fetching reviews by user ID.
+ */
 @Injectable()
 export class ReviewRepository{
     constructor(private readonly prismaService : PrismaService){}

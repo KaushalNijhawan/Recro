@@ -2,9 +2,12 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Book } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AddBooks } from "./dto/add.books.dto";
-import { filter } from "rxjs";
 import { FetchBooks } from "./dto/fetchBooks.dto";
-
+/**
+ * Class representing a BookRepository.
+ * 
+ * This class contains methods for retrieving, adding, and finding books using a Prisma service.
+ */
 @Injectable()
 export class BookRepository{
     constructor(private readonly prismaService : PrismaService){}

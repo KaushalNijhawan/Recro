@@ -3,7 +3,11 @@ import { BookRepository } from "./books.repository";
 import { Book } from "@prisma/client";
 import { AddBooks } from "./dto/add.books.dto";
 import { FetchBooks } from "./dto/fetchBooks.dto";
-
+/**
+ * Injectable class representing a BookService.
+ * 
+ * This class provides methods for retrieving all books, getting a book by its ID, and adding new books.
+ */
 @Injectable()
 export class BookService{
 
