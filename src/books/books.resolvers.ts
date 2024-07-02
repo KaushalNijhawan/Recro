@@ -2,13 +2,9 @@ import { Args, Query, Resolver, Int, Mutation, Context } from "@nestjs/graphql";
 import {Book} from "@prisma/client";
 import { BookService } from "./books.service";
 import { BooksSchema } from "./schema/books.schema";
-import { ReviewSchema } from "src/reviews/schema/review.schema";
 import { AddBooks } from "./dto/add.books.dto";
 import { AddBookResponse } from "./dto/addBookResponse.dto";
-import { UseGuards } from "@nestjs/common";
-import { AuthGaurdJwt } from "src/auth.guard";
 
-@UseGuards(AuthGaurdJwt)
 @Resolver(of => BooksSchema)
 export class BookResolver{
 

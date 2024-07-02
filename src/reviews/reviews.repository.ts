@@ -9,9 +9,13 @@ import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
 export class ReviewRepository{
     constructor(private readonly prismaService : PrismaService){}
 
-    async fetchReviewsByBookId(bookId: number): Promise<Review[]>{
+    async fetchReviewsByBookId(bookId: number, pageNumber?: number , limit?: number): Promise<Review[]>{
         try{
-            return await this.prismaService.review.findMany({ where : { bookId : bookId}});
+            let skipElements = 0 ;
+            if(pageNumber && limit && pageNumber > 1){
+               skipElements = (pageNumber-1)*limit;
+            }
+            return await this.prismaService.review.findMany({ where : { bookId : bookId}, skip : skipElements , take : limit});
         }catch(error){
             console.error(error);
             throw error;

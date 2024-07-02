@@ -10,9 +10,9 @@ export class ReviewService{
 
     constructor(private readonly reviewRepo : ReviewRepository){}
 
-    async fetchReviewByBookId(bookId:  number): Promise<Review[]>{
+    async fetchReviewByBookId(bookId:  number, pageNumber?: number , limit?: number): Promise<Review[]>{
         try{
-            return await this.reviewRepo.fetchReviewsByBookId(bookId);
+            return await this.reviewRepo.fetchReviewsByBookId(bookId, pageNumber, limit);
         }catch(error){
             console.error(error);
             throw error;

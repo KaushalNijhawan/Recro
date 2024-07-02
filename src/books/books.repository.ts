@@ -2,14 +2,28 @@ import { Injectable } from "@nestjs/common";
 import { Book } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AddBooks } from "./dto/add.books.dto";
+import { filter } from "rxjs";
 
 @Injectable()
 export class BookRepository{
     constructor(private readonly prismaService : PrismaService){}
 
-    async getAllBooks() : Promise<Book[]>{
+    async getAllBooks(pageNumber?:number, limit?:number , filterType?:string, filterValue?: string) : Promise<Book[]>{
         try{
-            return await this.prismaService.book.findMany();
+            const whereClauseQuery = {}
+            if(filterType && filterValue){
+               if(filterType === "author"){
+                   whereClauseQuery["author"] = filterValue;
+               }else if(filterType === "title"){
+                   whereClauseQuery["author"] = filterValue;
+               }
+            }
+            let skipElements = 0 ;
+            if(pageNumber && limit && pageNumber > 1 && limit > 0 ){
+               skipElements = (pageNumber-1)*limit;
+            }
+            
+            return await this.prismaService.book.findMany({ where : whereClauseQuery, skip: skipElements, take : limit});
         }catch(error){
             console.error(error);
             throw error;

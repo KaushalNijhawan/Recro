@@ -14,9 +14,11 @@ export class ReviewResolver{
     constructor(private readonly reviewService : ReviewService){}
 
     @Query(returns => [ReviewSchema])
-    async getReviews(@Args("bookId", { type : ()=> Int}) bookId: number ){
+    async getReviews(@Args("bookId", { type : ()=> Int})  bookId: number, 
+    @Args("page", { type: ()=> Int}) pageNumber : number = 1,
+    @Args("limit", { type: ()=> Int}) limit : number = 10){
         try{
-            return await this.reviewService.fetchReviewByBookId(bookId);
+            return await this.reviewService.fetchReviewByBookId(bookId, pageNumber, limit);
         }catch(error){
             console.error(error);
             return [];

@@ -8,7 +8,7 @@ export class BookService{
 
     constructor(private  readonly  bookRepo : BookRepository){}
 
-    async getAllBooks(): Promise<Book[]>{
+    async getAllBooks(pageNumber?:number, limit?:number , filterType?:string, filterValue?: string): Promise<Book[]>{
         try{
             return await this.bookRepo.getAllBooks();
         }catch(error){
