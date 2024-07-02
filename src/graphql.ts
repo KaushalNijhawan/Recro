@@ -50,29 +50,13 @@ export interface UpdateReviewRequest {
     comment?: Nullable<string>;
 }
 
-export interface BooksSchema {
-    id: string;
-    title: string;
-    author: string;
-    publishedYear: string;
-    reviews: ReviewSchema[];
-}
-
 export interface ReviewSchema {
     id: string;
-    book: BooksSchema;
-    user: UserSchema;
+    bookId: number;
+    userId: number;
     rating: number;
     comment?: Nullable<string>;
     createdAt: DateTime;
-}
-
-export interface UserSchema {
-    id: string;
-    reviews: ReviewSchema[];
-    username: string;
-    email: string;
-    password: string;
 }
 
 export interface LoginResponse {
@@ -82,6 +66,14 @@ export interface LoginResponse {
 export interface RegisterUserReponse {
     message: string;
     userId: number;
+}
+
+export interface BooksSchema {
+    id: string;
+    title: string;
+    author: string;
+    publishedYear: string;
+    reviews: ReviewSchema[];
 }
 
 export interface AddBookResponse {

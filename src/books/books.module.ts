@@ -6,7 +6,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { BookResolver } from './books.resolvers';
 
 @Module({
-    imports:[],
     providers : [BookRepository, BookService,  AuthGaurdJwt, PrismaService, BookResolver],
     exports:[BookService]
 })

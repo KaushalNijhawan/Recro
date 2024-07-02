@@ -23,6 +23,7 @@ export class BookService{
             return await this.bookRepo.findBookById(id);
         }catch(error){
             console.error(error);
+            throw error;
         }
     }
 

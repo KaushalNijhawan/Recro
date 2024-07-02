@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Book } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AddBooks } from "./dto/add.books.dto";
@@ -37,7 +37,11 @@ export class BookRepository{
 
     async findBookById(id: number): Promise<Book>{
         try{
-            return await this.prismaService.book.findUnique({ where: { id : id}});
+            const book = await this.prismaService.book.findUnique({ where: { id : id}});
+            if(!book){
+               throw new HttpException("Book Not Found!" , HttpStatus.BAD_REQUEST);
+            }
+            return book;
         }catch(error){
             console.error(error);
             throw error;

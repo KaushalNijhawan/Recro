@@ -7,7 +7,6 @@ import { JwtHelper } from './jwt.helper';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
-    imports: [],
     providers: [UsersRepository, UserService, UserResolver, PrismaService,JwtHelper, ConfigService],
     exports:[JwtHelper]
 })

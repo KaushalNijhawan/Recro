@@ -3,10 +3,11 @@ import { ReviewSchema } from "./schema/review.schema";
 import { ReviewService } from "./reviews.service";
 import { AddReviewRequest } from "./dto/addreview.dto";
 import { AddReviewResponse } from "./dto/addReviewResponse.dto";
-import { UseGuards } from "@nestjs/common";
+import { HttpException, HttpStatus, UseGuards } from "@nestjs/common";
 import { AuthGaurdJwt } from "src/auth.guard";
 import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
 import { FetchReview } from "./dto/fetchReview.dto";
+import { MessageConstants } from "src/constants/messageConstants";
 
 
 @Resolver(of => ReviewSchema)
@@ -20,7 +21,7 @@ export class ReviewResolver{
             return await this.reviewService.fetchReviewByBookId(fetchReview);
         }catch(error){
             console.error(error);
-            return [];
+            throw new HttpException(MessageConstants.SOMETHING_WENT_WRONG, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -32,7 +33,7 @@ export class ReviewResolver{
         return await this.reviewService.fetchReviewByUserId(userId);
       }catch(error){
           console.error(error);
-          return [];
+          throw new HttpException(MessageConstants.SOMETHING_WENT_WRONG, HttpStatus.UNPROCESSABLE_ENTITY);
       }
     }
 
@@ -44,9 +45,7 @@ export class ReviewResolver{
             return await this.reviewService.addReview(addReview, userId);
         }catch(error){
             console.error(error);
-            return {
-                message : "Something went wrong"
-            }
+            throw new HttpException(MessageConstants.SOMETHING_WENT_WRONG, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -58,9 +57,7 @@ export class ReviewResolver{
             return await this.reviewService.updateReview(updateReview, userId);
         }catch(error){
             console.error(error);
-            return {
-                message : "Something went wrong"
-            }
+            throw new HttpException(MessageConstants.SOMETHING_WENT_WRONG, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -71,9 +68,7 @@ export class ReviewResolver{
             return await this.reviewService.deleteReview(reviewId);
         }catch(error){
             console.error(error);
-            return {
-                message : "Something went wrong"
-            }
+            throw new HttpException(MessageConstants.SOMETHING_WENT_WRONG, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 }

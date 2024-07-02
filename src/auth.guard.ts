@@ -4,6 +4,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { JwtHelper } from "./users/jwt.helper";
 import { verify } from "jsonwebtoken";
 import { ConfigService } from "@nestjs/config";
+import { MessageConstants } from "./constants/messageConstants";
 
 export class AuthGaurdJwt extends AuthGuard('jwt'){
     constructor(private readonly configService : ConfigService){
@@ -16,7 +17,7 @@ export class AuthGaurdJwt extends AuthGuard('jwt'){
         const authHeader = ctx.req.headers.authorization;
         console.log(ctx.req.headers);
         if(!authHeader ){
-            throw new UnauthorizedException("Invalid User");
+            throw new UnauthorizedException(MessageConstants.INVALID_TOKEN);
         }
         const token = authHeader.split("Bearer ")[1];
         try{
@@ -24,7 +25,7 @@ export class AuthGaurdJwt extends AuthGuard('jwt'){
             console.log(response);
             ctx.req.userId = response["userId"];
         }catch(error){
-            return false;
+            throw new UnauthorizedException(MessageConstants.INVALID_TOKEN);
         }
         
         return true;

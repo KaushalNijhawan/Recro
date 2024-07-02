@@ -1,6 +1,4 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { BooksSchema } from "src/books/schema/books.schema";
-import { UserSchema } from "src/users/schema/users.schema";
 
 @ObjectType()
 export class ReviewSchema{
@@ -8,11 +6,11 @@ export class ReviewSchema{
         @Field(() => ID)
         id: number;
 
-        @Field(() => BooksSchema)
-        book : BooksSchema
+        @Field()
+        bookId : number;
 
-        @Field(() => UserSchema)
-        user : UserSchema;
+        @Field()
+        userId: number;
 
         @Field()
         rating: number;

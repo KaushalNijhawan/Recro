@@ -5,6 +5,9 @@ import { BooksSchema } from "./schema/books.schema";
 import { AddBooks } from "./dto/add.books.dto";
 import { AddBookResponse } from "./dto/addBookResponse.dto";
 import { FetchBooks } from "./dto/fetchBooks.dto";
+import { HttpException, HttpStatus, UseGuards } from "@nestjs/common";
+import { AuthGaurdJwt } from "src/auth.guard";
+import { MessageConstants } from "src/constants/messageConstants";
 
 @Resolver(of => BooksSchema)
 export class BookResolver{
@@ -17,7 +20,7 @@ export class BookResolver{
             return this.bookService.getAllBooks(fetchBooksDto);
         }catch(error){
             console.error(error);
-            return [];   
+            throw new HttpException(MessageConstants.SOMETHING_WENT_WRONG, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -27,17 +30,18 @@ export class BookResolver{
             return await this.bookService.getBookById(bookId);
         }catch(error){
             console.error(error);
-            return [];
+            throw new HttpException(MessageConstants.SOMETHING_WENT_WRONG, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
+    @UseGuards(AuthGaurdJwt)
     @Mutation(returns => AddBookResponse )
     async addBooks(@Args("addBookDto") addBookDto : AddBooks, @Context() context : any){
         try{
             return await this.bookService.addBooks(addBookDto);
         }catch(error){
             console.error(error);
-            throw error;
+            throw new HttpException(MessageConstants.SOMETHING_WENT_WRONG, HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
