@@ -10,6 +10,7 @@ import { BooksModule } from './books/books.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthGaurd } from './auth.guard';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -34,6 +35,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   }), 
   PrismaModule, UsersModule, BooksModule, ReviewsModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthGaurd],
 })
-export class AppModule { }
+export class AppModule {}

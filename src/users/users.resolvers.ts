@@ -1,10 +1,10 @@
 import { Args, Mutation, Resolver,   } from "@nestjs/graphql";
 import { UserSchema } from "./schema/users.schema";
-import { loginDto } from "./dto/login.dto";
+import { LoginDto } from "./dto/login.dto";
 import { UserService } from "./users.service";
 import { LoginResponse } from "./dto/login.reponse.dto";
 import { RegisterUserDto } from "./dto/register.dto";
-import { register } from "module";
+import { RegisterUserReponse } from "./dto/registerUserResponse.dto";
 
 @Resolver(of => UserSchema)
 export class UserResolver{
@@ -12,7 +12,7 @@ export class UserResolver{
     constructor(private readonly userService : UserService){}
 
     @Mutation(returns => LoginResponse)
-    async loginUser(@Args("loginUser") loginUser : loginDto){
+    async loginUser(@Args("loginUser") loginUser : LoginDto){
         try{
             const token = await this.userService.loginUser(loginUser);
             return {
@@ -24,7 +24,7 @@ export class UserResolver{
         }
     }
 
-    @Mutation()
+    @Mutation(returns => RegisterUserReponse)
     async registerUser(@Args("registerUser") registerUser : RegisterUserDto ){
         try{    
             return await this.userService.addUser(registerUser);

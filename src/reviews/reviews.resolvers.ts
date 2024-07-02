@@ -1,6 +1,8 @@
-import { Args, Query, Resolver, Int } from "@nestjs/graphql";
+import { Args, Query, Resolver, Int, Context } from "@nestjs/graphql";
 import { ReviewSchema } from "./schema/review.schema";
 import { ReviewService } from "./reviews.service";
+import { AddReviewRequest } from "./dto/addreview.dto";
+import { AddReviewResponse } from "./dto/addReviewResponse.dto";
 
 @Resolver(of => ReviewSchema)
 export class ReviewResolver{
@@ -18,7 +20,19 @@ export class ReviewResolver{
     }
 
     @Query(returns => [ReviewSchema])
-    async getMyReviews(){
+    async getMyReviews(@Context() context : any ){
 
+    }
+
+    @Query(returns => AddReviewResponse)
+    async addReviews(@Args("addReview") addReview : AddReviewRequest){
+        try{
+            return await this.reviewService.addReview(addReview);
+        }catch(error){
+            console.error(error);
+            return {
+                message : "Something went wrong"
+            }
+        }
     }
 }

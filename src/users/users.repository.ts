@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { RegisterUserDto } from "./dto/register.dto";
 import { JwtService } from "@nestjs/jwt";
-import { loginDto } from "./dto/login.dto";
+import { LoginDto } from "./dto/login.dto";
 import * as bycrpt from "bcrypt";
 
 @Injectable()
@@ -11,7 +11,7 @@ export class UsersRepository{
         private readonly jwwtService : JwtService
     ){}
 
-    async addUser(registerUser : RegisterUserDto): Promise<string>{
+    async addUser(registerUser : RegisterUserDto): Promise<{ message : string , userId: number}>{
         try{    
             const userToSave = await this.prismaService.user.create({
                 data : {
@@ -20,14 +20,17 @@ export class UsersRepository{
                     username : registerUser?.username
                 }
             });
-            return "saved";
+            return {
+                message : "saved",
+                userId : userToSave?.id
+            };
         }catch(error){
             console.error(error);
             throw new Error("Error While Saving User!");
         }
     }
 
-    async verifyUser(loginUser: loginDto){
+    async verifyUser(loginUser: LoginDto){
         try{
             const username = loginUser?.username;
             const user = await this.prismaService.user.findUnique({ where : { username}});

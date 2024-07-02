@@ -1,22 +1,22 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
 import { IsNotEmpty, IsString } from "class-validator";
 
-@InputType()
-export class RegisterUserDto{
+@ObjectType()
+export class AddBooks{
 
     @Field()
     @IsNotEmpty()
     @IsString()
-    username: string;
+    title: string;
 
     @Field()
     @IsNotEmpty()
     @IsString()
-    email: string;
+    author: string;
 
     @Field()
     @IsNotEmpty()
     @IsString()
-    password: string;
+    publishedYear: string;
 
 }

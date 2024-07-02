@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { BookRepository } from "./books.repository";
 import { Book } from "@prisma/client";
+import { AddBooks } from "./dto/add.books.dto";
 
 @Injectable()
 export class BookService{
@@ -21,6 +22,15 @@ export class BookService{
             return await this.bookRepo.findBookById(id);
         }catch(error){
             console.error(error);
+        }
+    }
+
+    async addBooks(bookDto : AddBooks):Promise<{bookId: number , message : string}>{
+        try{
+            return await this.bookRepo.addBooks(bookDto);
+        }catch(error){
+            console.error(error);
+            throw error;
         }
     }
 }

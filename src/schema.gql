@@ -1,0 +1,78 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type BooksSchema {
+  id: ID!
+  title: String!
+  author: String!
+  publishedYear: String!
+  reviews: [ReviewSchema!]!
+}
+
+type ReviewSchema {
+  id: ID!
+  book: BooksSchema!
+  user: UserSchema!
+  rating: Float!
+  comment: String
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserSchema {
+  id: ID!
+  reviews: [ReviewSchema!]!
+  username: String!
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  accessToken: String!
+}
+
+type RegisterUserReponse {
+  message: String!
+  userId: Float!
+}
+
+type AddReviewResponse {
+  reviewId: Float!
+  bookId: Float!
+  userId: Float!
+  message: String!
+}
+
+type Query {
+  getReviews(bookId: Int!): [ReviewSchema!]!
+  getMyReviews: [ReviewSchema!]!
+  addReviews(addReview: AddReviewRequest!): AddReviewResponse!
+}
+
+input AddReviewRequest {
+  bookId: Float!
+  userId: Float!
+  rating: Float!
+  comment: String!
+}
+
+type Mutation {
+  loginUser(loginUser: LoginDto!): LoginResponse!
+  registerUser(registerUser: RegisterUserDto!): RegisterUserReponse!
+}
+
+input LoginDto {
+  username: String!
+  password: String!
+}
+
+input RegisterUserDto {
+  username: String!
+  email: String!
+  password: String!
+}
