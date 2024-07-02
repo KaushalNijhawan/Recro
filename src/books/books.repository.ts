@@ -3,13 +3,18 @@ import { Book } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { AddBooks } from "./dto/add.books.dto";
 import { filter } from "rxjs";
+import { FetchBooks } from "./dto/fetchBooks.dto";
 
 @Injectable()
 export class BookRepository{
     constructor(private readonly prismaService : PrismaService){}
 
-    async getAllBooks(pageNumber?:number, limit?:number , filterType?:string, filterValue?: string) : Promise<Book[]>{
+    async getAllBooks(fetchBooksDto :FetchBooks) : Promise<Book[]>{
         try{
+            const filterType = fetchBooksDto?.filterType;
+            const filterValue = fetchBooksDto?.filterValue;
+            const pageNumber = fetchBooksDto?.page;
+            const limit = fetchBooksDto?.limit;
             const whereClauseQuery = {}
             if(filterType && filterValue){
                if(filterType === "author"){

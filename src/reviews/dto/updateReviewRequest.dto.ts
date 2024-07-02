@@ -9,12 +9,12 @@ export class UpdateReviewRequest{
     @IsNumber()
     reviewId: number;
 
-    @Field()
+    @Field({ nullable : true})
     @IsOptional()
     @IsNumber()
     rating: number;
 
-    @Field()
+    @Field({ nullable : true})
     @IsOptional()
     @IsString()
     comment: string;

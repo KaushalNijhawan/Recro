@@ -54,10 +54,23 @@ type AddReviewResponse {
 }
 
 type Query {
-  getBooks: [BooksSchema!]!
+  getBooks(fetchBooksDto: FetchBooks!): [BooksSchema!]!
   getBookById(bookId: Int!): BooksSchema
-  getReviews(bookId: Int!): [ReviewSchema!]!
+  getReviews(fetchReview: FetchReview!): [ReviewSchema!]!
   getMyReviews: [ReviewSchema!]!
+}
+
+input FetchBooks {
+  page: Float
+  limit: Float
+  filterType: String
+  filterValue: String
+}
+
+input FetchReview {
+  page: Float
+  limit: Float
+  bookId: Float!
 }
 
 type Mutation {
@@ -94,6 +107,6 @@ input AddReviewRequest {
 
 input UpdateReviewRequest {
   reviewId: Float!
-  rating: Float!
-  comment: String!
+  rating: Float
+  comment: String
 }

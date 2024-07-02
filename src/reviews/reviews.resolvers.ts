@@ -6,25 +6,25 @@ import { AddReviewResponse } from "./dto/addReviewResponse.dto";
 import { UseGuards } from "@nestjs/common";
 import { AuthGaurdJwt } from "src/auth.guard";
 import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
+import { FetchReview } from "./dto/fetchReview.dto";
 
-@UseGuards(AuthGaurdJwt)
+
 @Resolver(of => ReviewSchema)
 export class ReviewResolver{
 
     constructor(private readonly reviewService : ReviewService){}
 
     @Query(returns => [ReviewSchema])
-    async getReviews(@Args("bookId", { type : ()=> Int})  bookId: number, 
-    @Args("page", { type: ()=> Int}) pageNumber : number = 1,
-    @Args("limit", { type: ()=> Int}) limit : number = 10){
+    async getReviews(@Args("fetchReview")fetchReview : FetchReview){
         try{
-            return await this.reviewService.fetchReviewByBookId(bookId, pageNumber, limit);
+            return await this.reviewService.fetchReviewByBookId(fetchReview);
         }catch(error){
             console.error(error);
             return [];
         }
     }
 
+    @UseGuards(AuthGaurdJwt)
     @Query(returns => [ReviewSchema])
     async getMyReviews(@Context() context : any ){
       try{
@@ -36,6 +36,7 @@ export class ReviewResolver{
       }
     }
 
+    @UseGuards(AuthGaurdJwt)
     @Mutation(returns => AddReviewResponse)
     async addReviews(@Args("addReview") addReview : AddReviewRequest, @Context() context : any ){
         try{
@@ -49,6 +50,7 @@ export class ReviewResolver{
         }
     }
 
+    @UseGuards(AuthGaurdJwt)
     @Mutation(returns => AddReviewResponse)
     async updateReview(@Args("updateReview") updateReview : UpdateReviewRequest , @Context() context : any){
         try{
@@ -62,6 +64,7 @@ export class ReviewResolver{
         }
     }
 
+    @UseGuards(AuthGaurdJwt)
     @Mutation(returns => String)
     async DeleteReview(@Args("reviewId") reviewId : number , @Context() context : any){
         try{

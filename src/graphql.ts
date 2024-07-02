@@ -8,6 +8,19 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export interface FetchBooks {
+    page?: Nullable<number>;
+    limit?: Nullable<number>;
+    filterType?: Nullable<string>;
+    filterValue?: Nullable<string>;
+}
+
+export interface FetchReview {
+    page?: Nullable<number>;
+    limit?: Nullable<number>;
+    bookId: number;
+}
+
 export interface LoginDto {
     username: string;
     password: string;
@@ -33,8 +46,8 @@ export interface AddReviewRequest {
 
 export interface UpdateReviewRequest {
     reviewId: number;
-    rating: number;
-    comment: string;
+    rating?: Nullable<number>;
+    comment?: Nullable<string>;
 }
 
 export interface BooksSchema {
@@ -84,9 +97,9 @@ export interface AddReviewResponse {
 }
 
 export interface IQuery {
-    getBooks(): BooksSchema[] | Promise<BooksSchema[]>;
+    getBooks(fetchBooksDto: FetchBooks): BooksSchema[] | Promise<BooksSchema[]>;
     getBookById(bookId: number): Nullable<BooksSchema> | Promise<Nullable<BooksSchema>>;
-    getReviews(bookId: number): ReviewSchema[] | Promise<ReviewSchema[]>;
+    getReviews(fetchReview: FetchReview): ReviewSchema[] | Promise<ReviewSchema[]>;
     getMyReviews(): ReviewSchema[] | Promise<ReviewSchema[]>;
 }
 

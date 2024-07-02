@@ -4,15 +4,16 @@ import { Review } from "@prisma/client";
 import { AddReviewRequest } from "./dto/addreview.dto";
 import { AddReviewResponse } from "./dto/addReviewResponse.dto";
 import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
+import { FetchReview } from "./dto/fetchReview.dto";
 
 @Injectable()
 export class ReviewService{
 
     constructor(private readonly reviewRepo : ReviewRepository){}
 
-    async fetchReviewByBookId(bookId:  number, pageNumber?: number , limit?: number): Promise<Review[]>{
+    async fetchReviewByBookId(fetchReview : FetchReview): Promise<Review[]>{
         try{
-            return await this.reviewRepo.fetchReviewsByBookId(bookId, pageNumber, limit);
+            return await this.reviewRepo.fetchReviewsByBookId(fetchReview);
         }catch(error){
             console.error(error);
             throw error;

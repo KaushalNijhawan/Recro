@@ -4,6 +4,7 @@ import { BookService } from "./books.service";
 import { BooksSchema } from "./schema/books.schema";
 import { AddBooks } from "./dto/add.books.dto";
 import { AddBookResponse } from "./dto/addBookResponse.dto";
+import { FetchBooks } from "./dto/fetchBooks.dto";
 
 @Resolver(of => BooksSchema)
 export class BookResolver{
@@ -11,9 +12,9 @@ export class BookResolver{
     constructor(private readonly bookService : BookService){}
 
     @Query(returns => [BooksSchema])
-    async getBooks(): Promise<Book[]>{
+    async getBooks(@Args("fetchBooksDto") fetchBooksDto :FetchBooks): Promise<Book[]>{
         try{
-            return this.bookService.getAllBooks();
+            return this.bookService.getAllBooks(fetchBooksDto);
         }catch(error){
             console.error(error);
             return [];   

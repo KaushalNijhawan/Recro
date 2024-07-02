@@ -4,14 +4,18 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { AddReviewRequest } from "./dto/addreview.dto";
 import { AddReviewResponse } from "./dto/addReviewResponse.dto";
 import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
+import { FetchReview } from "./dto/fetchReview.dto";
 
 @Injectable()
 export class ReviewRepository{
     constructor(private readonly prismaService : PrismaService){}
 
-    async fetchReviewsByBookId(bookId: number, pageNumber?: number , limit?: number): Promise<Review[]>{
+    async fetchReviewsByBookId(fetchReview : FetchReview): Promise<Review[]>{
         try{
             let skipElements = 0 ;
+            const limit = fetchReview?.limit;
+            const pageNumber = fetchReview?.page;
+            const bookId = fetchReview?.bookId;
             if(pageNumber && limit && pageNumber > 1){
                skipElements = (pageNumber-1)*limit;
             }
