@@ -1,11 +1,14 @@
-import { Args, Query, Resolver, Int, Mutation } from "@nestjs/graphql";
+import { Args, Query, Resolver, Int, Mutation, Context } from "@nestjs/graphql";
 import {Book} from "@prisma/client";
 import { BookService } from "./books.service";
 import { BooksSchema } from "./schema/books.schema";
 import { ReviewSchema } from "src/reviews/schema/review.schema";
 import { AddBooks } from "./dto/add.books.dto";
 import { AddBookResponse } from "./dto/addBookResponse.dto";
+import { UseGuards } from "@nestjs/common";
+import { AuthGaurdJwt } from "src/auth.guard";
 
+@UseGuards(AuthGaurdJwt)
 @Resolver(of => BooksSchema)
 export class BookResolver{
 
@@ -32,7 +35,7 @@ export class BookResolver{
     }
 
     @Mutation(returns => AddBookResponse )
-    async addBooks(@Args("addBookDto") addBookDto : AddBooks){
+    async addBooks(@Args("addBookDto") addBookDto : AddBooks, @Context() context : any){
         try{
             return await this.bookService.addBooks(addBookDto);
         }catch(error){

@@ -12,9 +12,9 @@ export class UserResolver{
     constructor(private readonly userService : UserService){}
 
     @Mutation(returns => LoginResponse)
-    async loginUser(@Args("loginUser") loginUser : LoginDto){
+    async loginUser(@Args("loginUserType") loginUserType : LoginDto){
         try{
-            const token = await this.userService.loginUser(loginUser);
+            const token = await this.userService.loginUser(loginUserType);
             return {
                 accessToken : token
             };
@@ -25,12 +25,15 @@ export class UserResolver{
     }
 
     @Mutation(returns => RegisterUserReponse)
-    async registerUser(@Args("registerUser") registerUser : RegisterUserDto ){
+    async registerUser(@Args("registerUserType") registerUserType : RegisterUserDto ){
         try{    
-            return await this.userService.addUser(registerUser);
+            const response = await this.userService.addUser(registerUserType);
+            console.log(response);
+            return response;
         }catch(error){
             console.error(error);
             return error;    
         }
     }
+    
 }

@@ -2,21 +2,20 @@ import { Field, InputType } from "@nestjs/graphql";
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 @InputType()
-export class AddReviewRequest{
+export class UpdateReviewRequest{
 
     @Field()
     @IsNotEmpty()
     @IsNumber()
-    bookId: number;
+    reviewId: number;
 
     @Field()
-    @IsNotEmpty()
+    @IsOptional()
     @IsNumber()
     rating: number;
 
     @Field()
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     comment: string;
-    
 }

@@ -41,6 +41,11 @@ type RegisterUserReponse {
   userId: Float!
 }
 
+type AddBookResponse {
+  message: String!
+  bookId: String!
+}
+
 type AddReviewResponse {
   reviewId: Float!
   bookId: Float!
@@ -49,21 +54,19 @@ type AddReviewResponse {
 }
 
 type Query {
+  getBooks: [BooksSchema!]!
+  getBookById(bookId: Int!): BooksSchema
   getReviews(bookId: Int!): [ReviewSchema!]!
   getMyReviews: [ReviewSchema!]!
-  addReviews(addReview: AddReviewRequest!): AddReviewResponse!
-}
-
-input AddReviewRequest {
-  bookId: Float!
-  userId: Float!
-  rating: Float!
-  comment: String!
 }
 
 type Mutation {
-  loginUser(loginUser: LoginDto!): LoginResponse!
-  registerUser(registerUser: RegisterUserDto!): RegisterUserReponse!
+  loginUser(loginUserType: LoginDto!): LoginResponse!
+  registerUser(registerUserType: RegisterUserDto!): RegisterUserReponse!
+  addBooks(addBookDto: AddBooks!): AddBookResponse!
+  addReviews(addReview: AddReviewRequest!): AddReviewResponse!
+  updateReview(updateReview: UpdateReviewRequest!): AddReviewResponse!
+  DeleteReview(reviewId: Float!): String!
 }
 
 input LoginDto {
@@ -75,4 +78,22 @@ input RegisterUserDto {
   username: String!
   email: String!
   password: String!
+}
+
+input AddBooks {
+  title: String!
+  author: String!
+  publishedYear: String!
+}
+
+input AddReviewRequest {
+  bookId: Float!
+  rating: Float!
+  comment: String!
+}
+
+input UpdateReviewRequest {
+  reviewId: Float!
+  rating: Float!
+  comment: String!
 }

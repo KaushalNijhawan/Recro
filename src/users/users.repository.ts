@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { RegisterUserDto } from "./dto/register.dto";
-import { JwtService } from "@nestjs/jwt";
 import { LoginDto } from "./dto/login.dto";
 import * as bycrpt from "bcrypt";
+import { JwtHelper } from "./jwt.helper";
 
 @Injectable()
 export class UsersRepository{
     constructor(private readonly prismaService : PrismaService,
-        private readonly jwwtService : JwtService
+        private readonly jwtHelper : JwtHelper
     ){}
 
     async addUser(registerUser : RegisterUserDto): Promise<{ message : string , userId: number}>{
@@ -37,7 +37,7 @@ export class UsersRepository{
             const passwordEncrypted = user?.password;
             const isMatch = await bycrpt.compare(loginUser?.password, passwordEncrypted);
             if(isMatch){
-                return await this.jwwtService.sign({ userId : user?.id});
+                return this.jwtHelper.fetchToken({ userId : user?.id});
             }else{
                 throw Error("Invalid Username or Password!");
             }

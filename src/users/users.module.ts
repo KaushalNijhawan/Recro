@@ -3,10 +3,12 @@ import { UsersRepository } from './users.repository';
 import { UserService } from './users.service';
 import { UserResolver } from './users.resolvers';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { JwtService } from '@nestjs/jwt';
+import { JwtHelper } from './jwt.helper';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
-    imports:[],
-    providers:[UsersRepository, UserService, UserResolver, PrismaService, JwtService]
+    imports: [],
+    providers: [UsersRepository, UserService, UserResolver, PrismaService,JwtHelper, ConfigService],
+    exports:[JwtHelper]
 })
-export class UsersModule {}
+export class UsersModule { }

@@ -8,13 +8,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export interface AddReviewRequest {
-    bookId: number;
-    userId: number;
-    rating: number;
-    comment: string;
-}
-
 export interface LoginDto {
     username: string;
     password: string;
@@ -24,6 +17,24 @@ export interface RegisterUserDto {
     username: string;
     email: string;
     password: string;
+}
+
+export interface AddBooks {
+    title: string;
+    author: string;
+    publishedYear: string;
+}
+
+export interface AddReviewRequest {
+    bookId: number;
+    rating: number;
+    comment: string;
+}
+
+export interface UpdateReviewRequest {
+    reviewId: number;
+    rating: number;
+    comment: string;
 }
 
 export interface BooksSchema {
@@ -60,6 +71,11 @@ export interface RegisterUserReponse {
     userId: number;
 }
 
+export interface AddBookResponse {
+    message: string;
+    bookId: string;
+}
+
 export interface AddReviewResponse {
     reviewId: number;
     bookId: number;
@@ -68,14 +84,19 @@ export interface AddReviewResponse {
 }
 
 export interface IQuery {
+    getBooks(): BooksSchema[] | Promise<BooksSchema[]>;
+    getBookById(bookId: number): Nullable<BooksSchema> | Promise<Nullable<BooksSchema>>;
     getReviews(bookId: number): ReviewSchema[] | Promise<ReviewSchema[]>;
     getMyReviews(): ReviewSchema[] | Promise<ReviewSchema[]>;
-    addReviews(addReview: AddReviewRequest): AddReviewResponse | Promise<AddReviewResponse>;
 }
 
 export interface IMutation {
-    loginUser(loginUser: LoginDto): LoginResponse | Promise<LoginResponse>;
-    registerUser(registerUser: RegisterUserDto): RegisterUserReponse | Promise<RegisterUserReponse>;
+    loginUser(loginUserType: LoginDto): LoginResponse | Promise<LoginResponse>;
+    registerUser(registerUserType: RegisterUserDto): RegisterUserReponse | Promise<RegisterUserReponse>;
+    addBooks(addBookDto: AddBooks): AddBookResponse | Promise<AddBookResponse>;
+    addReviews(addReview: AddReviewRequest): AddReviewResponse | Promise<AddReviewResponse>;
+    updateReview(updateReview: UpdateReviewRequest): AddReviewResponse | Promise<AddReviewResponse>;
+    DeleteReview(reviewId: number): string | Promise<string>;
 }
 
 export type DateTime = any;
