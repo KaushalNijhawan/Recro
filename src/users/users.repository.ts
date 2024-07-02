@@ -22,7 +22,7 @@ export class UsersRepository{
                 }
             });
             return {
-                message : "saved",
+                message : MessageConstants.SUCCESS,
                 userId : userToSave?.id
             };
         }catch(error){

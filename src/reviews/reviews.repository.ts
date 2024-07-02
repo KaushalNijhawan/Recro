@@ -5,6 +5,7 @@ import { AddReviewRequest } from "./dto/addreview.dto";
 import { AddReviewResponse } from "./dto/addReviewResponse.dto";
 import { UpdateReviewRequest } from "./dto/updateReviewRequest.dto";
 import { FetchReview } from "./dto/fetchReview.dto";
+import { MessageConstants } from "src/constants/messageConstants";
 
 @Injectable()
 export class ReviewRepository{
@@ -51,7 +52,7 @@ export class ReviewRepository{
                 userId: reviewToSave?.userId,
                 bookId: reviewToSave?.bookId,
                 reviewId: reviewToSave?.id,
-                message: "Saved"
+                message: MessageConstants.SUCCESS
             }
         }catch(error){
             console.error(error);
